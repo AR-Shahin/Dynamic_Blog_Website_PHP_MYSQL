@@ -9,6 +9,8 @@ $sql = "SELECT posts.*, categories.cat_name as categoryTitle
             WHERE posts.id = '$id' ";
 $result = mysqli_query($con,$sql);
 $data = mysqli_fetch_assoc($result);
+
+
 session_start();
 ?> 
 <h2>Update Post</h2>
@@ -42,19 +44,27 @@ session_start();
     <label for="exampleInputEmail1">Category</label>
     <select name="cat_id" class="form-control">
     <option selected>Select Category</option>
-    <?php while($row = mysqli_fetch_assoc($result)){ ?>
-      <option value = "<?= $row['id'];?>"><?= $row['cat_name'];?></option>
+    <?php 
+    $sql = "SELECT * FROM categories";
+    $result = mysqli_query($con,$sql);
+    while($row = mysqli_fetch_assoc($result)){?>
+  
+	    			<option value="<?= $row['id'] ?>" > <?= $row['cat_name'] ?> </option>
+
+	    			
       <?php }?>
     </select>
   
   </div>
   <div class="form-group">
     <label for="exampleInputEmail1">Description</label>
-    <textarea name="description" cols="30" rows="5" class="form-control" placeholder ="Write description . . ." value="<?= $data['description']?>"></textarea>
+    <textarea name="description" cols="30" rows="5" class="form-control" placeholder ="Write description . . ." ><?= $data['description'];?>"</textarea>
   </div>
   <div class="form-group">
     <label for="exampleInputEmail1">Image</label>
     <input type="file" class="form-control" name ="image">
+
+    <img src="../<?= $data['image'] ?>" alt="" width =100>
   </div>
   <div class="form-group">
     <label for="exampleInputEmail1">Date</label>
